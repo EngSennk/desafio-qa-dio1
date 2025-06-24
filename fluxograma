@@ -1,1 +1,112 @@
+ Documento 1: Plano de Fluxo de Trabalho e Ciclo de Vida de um Bug
+a) Fluxo de Trabalho (Workflow) do Projeto
+O fluxo de trabalho define as etapas pelas quais uma tarefa (história de usuário) passa, desde a sua criação até a conclusão.
+Backlog: Todas as ideias e requisitos são armazenados aqui. As histórias de usuário a serem trabalhadas são priorizadas e movidas daqui.
+A Fazer (To Do): Tarefas priorizadas do Backlog que estão prontas para serem iniciadas pela equipe de desenvolvimento.
+Em Andamento (In Progress): A tarefa está sendo ativamente desenvolvida.
+Pronto para QA (Ready for QA): O desenvolvimento foi concluído e a tarefa está pronta para ser testada pela equipe de Qualidade.
+Em QA (In QA): A tarefa está sendo ativamente testada para validar os critérios de aceite.
+Feito (Done): A tarefa foi aprovada nos testes e entregue. O valor foi agregado ao produto.
+b) Ciclo de Vida de um Bug (Bug Life Cycle)
+Este ciclo descreve o status de um defeito desde sua descoberta até sua resolução.
+Novo (New): O bug é recém-descoberto e reportado no sistema.
+Aberto (Open): O bug foi analisado, validado como um defeito real e está na fila para ser corrigido.
+Em Correção (In Fix): Um desenvolvedor está trabalhando ativamente na correção do bug.
+Pronto para Teste (Ready to Test): A correção foi implementada e está pronta para ser validada pela equipe de QA.
+Fechado (Closed): O bug foi retestado pela equipe de QA e a correção foi confirmada. O bug está resolvido.
+Reaberto (Reopened): Durante o reteste, a equipe de QA constatou que a correção não foi eficaz e o bug ainda ocorre. Ele volta para o status "Aberto".
+Rejeitado (Rejected): Após a análise, foi constatado que o comportamento reportado não é um bug (ex: funciona como esperado, é uma duplicata, etc.).
+
+👤 Documento 2: Histórias de Usuário (User Stories)
+Aqui estão duas exemplos de histórias de usuário para um e-commerce fictício.
+HU-01: Login de Cliente
+
+
+Eu, como um cliente cadastrado,
+quero poder fazer login na plataforma
+para que eu possa acessar meu histórico de compras e gerenciar meus dados pessoais.
+Critérios de Aceite:
+O usuário deve conseguir fazer login usando e-mail e senha válidos.
+O sistema deve exibir uma mensagem de erro se as credenciais forem inválidas.
+Deve haver um link "Esqueci minha senha" para recuperação de acesso.
+Após o login, o usuário deve ser redirecionado para a página "Minha Conta".
+HU-02: Busca de Produtos
+
+
+Eu, como um visitante do site,
+quero usar uma barra de busca para encontrar produtos por nome ou categoria
+para que eu possa encontrar o item que desejo comprar de forma rápida.
+Critérios de Aceite:
+A barra de busca deve estar visível em todas as páginas principais.
+A busca deve retornar uma lista de produtos que correspondam à palavra-chave inserida.
+Se nenhum produto for encontrado, uma mensagem "Nenhum produto encontrado" deve ser exibida.
+O usuário deve poder clicar em um produto na lista de resultados para ver seus detalhes.
+
+🧪 Documento 3: Documentação de Teste
+a) Mind Map (Baseado na HU-01: Login de Cliente)
+Este é um exemplo de como estruturar o mind map para a funcionalidade de login.
+Nó Central: Login de Cliente
+Ramo 1: Autenticação Válida
+Sub-ramo: E-mail e senha corretos
+Sub-ramo: Login com e-mail em maiúsculas/minúsculas
+Ramo 2: Autenticação Inválida
+Sub-ramo: Senha incorreta
+Sub-ramo: E-mail não cadastrado
+Sub-ramo: Campos em branco
+Ramo 3: Interface (UI)
+Sub-ramo: Campo de e-mail
+Sub-ramo: Campo de senha (com opção "mostrar/ocultar")
+Sub-ramo: Botão "Entrar"
+Sub-ramo: Link "Esqueci minha senha"
+Ramo 4: Segurança
+Sub-ramo: Bloqueio de conta após X tentativas falhas
+Sub-ramo: Redirecionamento para HTTPS
+b) Casos de Teste (Step-by-step)
+CT-01: Login com Credenciais Válidas (Relacionado à HU-01)
+
+
+Objetivo: Verificar se um usuário cadastrado consegue fazer login com sucesso.
+Pré-condição: O usuário deve possuir um cadastro ativo no sistema.
+Passos:
+Acessar a página de login.
+Inserir um e-mail cadastrado no campo "E-mail".
+Inserir a senha correspondente no campo "Senha".
+Clicar no botão "Entrar".
+Resultado Esperado: O sistema deve autenticar o usuário e redirecioná-lo para a página "Minha Conta".
+CT-02: Buscar por um Produto Existente (Relacionado à HU-02)
+
+
+Objetivo: Verificar se a busca retorna produtos existentes.
+Pré-condição: Devem existir produtos cadastrados no sistema (ex: "Laptop Pro").
+Passos:
+Acessar a página inicial.
+Digitar "Laptop Pro" na barra de busca.
+Clicar no ícone de busca ou pressionar "Enter".
+Resultado Esperado: A página de resultados deve ser exibida, mostrando o produto "Laptop Pro" e outros itens relevantes.
+c) Casos de Teste (BDD - Gherkin)
+BDD-01: Tentativa de login com senha incorreta (Relacionado à HU-01)
+
+ Gherkin
+# language: pt
+Funcionalidade: Autenticação de Usuário
+Cenário: Tentativa de login com senha incorreta
+  Dado que estou na página de login
+  E insiro o e-mail "cliente@teste.com" que é de um usuário válido
+  Quando eu insiro a senha "senhaerrada"
+  E clico no botão "Entrar"
+  Então devo ver uma mensagem de erro informando "E-mail ou senha inválidos."
+
+
+BDD-02: Busca por um produto que não existe (Relacionado à HU-02)
+
+ Gherkin
+# language: pt
+Funcionalidade: Busca de Produtos
+Cenário: Busca por um produto inexistente
+  Dado que estou na página inicial do e-commerce
+  Quando eu busco pelo termo "produtoquenaoexiste123"
+  Então devo ver uma mensagem clara na tela dizendo "Nenhum produto encontrado para sua busca."
+
+
+
 
